@@ -15,11 +15,12 @@
 
         // Now we can call our Command.
         // `invoke` returns a Promise
-        invoke('greet', { name: 'World' }).then((response) => {
+        invoke('greet', { name: 'from Rust' })
+            .then((response) => {
             document.getElementById('message').innerText = response;
             //window.header.innerHTML = response
-        });
-
+            }
+        );
 
     </script>
 
