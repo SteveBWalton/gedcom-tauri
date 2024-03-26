@@ -7,7 +7,7 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "Tauri Test",
+    "productName": "gedcom-tauri",
     "version": "0.1.0"
   },
   "tauri": {
@@ -58,7 +58,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "Tauri Test",
+        "title": "Gedcom Tauri",
         "width": 800
       }
     ]
