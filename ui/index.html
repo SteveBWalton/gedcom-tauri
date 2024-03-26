@@ -7,6 +7,22 @@
   </head>
   <body>
     <h1>Welcome from Tauri!</h1>
+    <p id="message"></p>
+
+    <script>
+        // access the pre-bundled global API functions
+        const { invoke } = window.__TAURI__.tauri;
+
+        // Now we can call our Command.
+        // `invoke` returns a Promise
+        invoke('greet', { name: 'World' }).then((response) => {
+            document.getElementById('message').innerText = response;
+            //window.header.innerHTML = response
+        });
+
+
+    </script>
+
   </body>
 </html>
 
