@@ -22,7 +22,22 @@
             }
         );
 
+        // Code to execute on button click.
+        function buttonClick()
+        {
+            invoke('test_action', {});
+            return false;
+        }
+
     </script>
+
+    <p><a href="page2.html">Page 2</a></p>
+
+    <p>
+    <button onClick="javascript:location.reload()">Refresh</button>
+
+    <button onClick="javascript:buttonClick()">Execute Rust</button>
+    </p>
 
   </body>
 </html>
