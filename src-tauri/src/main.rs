@@ -1,7 +1,16 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+
+use tauri::api::dialog::blocking::FileDialogBuilder;
+
+
+
+
+
 static mut global_int: i32 = 5;
+
+
 
 fn main() {
   tauri::Builder::default()
@@ -26,11 +35,21 @@ fn greet(name: &str) -> String {
 
 
 #[tauri::command]
-fn test_action() {
-    unsafe {
-        global_int += 1;
+// The async allows the function to run not on the main thread and allow blocking dialogs.
+async fn test_action() {
+    let dialog_result = tauri::api::dialog::blocking::FileDialogBuilder::new()
+        .add_filter("Markdown", &["md", "jpg"])
+        .pick_file();
+    match dialog_result {
+        None => {
+            println!("Cancel.");
+        }
+        Some(path) => {
+            println!("OK.");
+            let path_name = path.to_string_lossy();
+            println!("{path_name}");
+        }
     }
-    println!("test_action() has executed.");
 }
 
 
