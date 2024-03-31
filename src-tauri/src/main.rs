@@ -3,25 +3,17 @@
 
 // System modules.
 use tauri::api::dialog::blocking::FileDialogBuilder;
-use std::sync::Mutex;
 use tauri::State;
 
 // Application modules.
-mod gedcom_doc;
-
-
-
-struct Counter {
-    count: Mutex<i32>,
-}
+mod settings;
+use settings::Settings;
 
 
 
 fn main() {
-    // let mut gedcom_doc = gedcom_doc::GedcomDoc::new();
-
     tauri::Builder::default()
-        .manage(Counter { count: Mutex::new(0) })
+        .manage(Settings::new())
         .invoke_handler(tauri::generate_handler![greet, test_action])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -30,13 +22,16 @@ fn main() {
 
 
 #[tauri::command]
-fn greet(name: &str, state: State<Counter>) -> String {
-    let mut result: String = "".to_string();
-
+fn greet(name: &str, state: State<Settings> ) -> String {
     println!("greet() has executed.");
-    let mut counter = state.count.lock().unwrap();
-    *counter = *counter + 1;
-    result = format!("Hello, {name} {}.", *counter);
+
+    let mut count = state.count.lock().unwrap();
+    *count += 1;
+
+    let test = state.test.lock().unwrap();
+    let file_name = test.to_string_lossy();
+
+    let result = format!("Hello, {name} {}\n{}.", *count, file_name);
     return result;
 }
 
@@ -44,9 +39,14 @@ fn greet(name: &str, state: State<Counter>) -> String {
 
 #[tauri::command]
 // The async allows the function to run not on the main thread and allow blocking dialogs.
-async fn test_action() {
-    let dialog_result = tauri::api::dialog::blocking::FileDialogBuilder::new()
+// The '_, is required because this is an async function.
+// In Tauri, async function have to return something.  Without the state you get away without a return.
+// async fn test_action(state: State<'_, Settings>) -> Result<String, ()> {    // Return Ok("Hello".to_string());
+// async fn test_action(state: State<'_, Settings>) -> Result<bool, ()> {      // return Ok(true);
+async fn test_action(state: State<'_, Settings>) -> Result<(), ()> {           // return Ok(());
+    let dialog_result = FileDialogBuilder::new()
         .add_filter("Markdown", &["md", "jpg"])
+        .add_filter("All Files", &["*"])
         .pick_file();
     match dialog_result {
         None => {
@@ -54,10 +54,16 @@ async fn test_action() {
         }
         Some(path) => {
             println!("OK.");
-            let path_name = path.to_string_lossy();
+            let path_name :String = path.to_string_lossy().to_string();
             println!("{path_name}");
+            let mut test = state.test.lock().unwrap();
+            *test = path;
+            // state.file_name = path_name; // .to_string_lossy();
         }
     }
+    // return Ok("Hello".to_string());
+    // return Ok(true);
+    return Ok(());
 }
 
 
