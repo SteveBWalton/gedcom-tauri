@@ -62,6 +62,7 @@ fn get_file_name(state: State<Settings> ) -> String {
 async fn pick_file(state: State<'_, Settings>) -> Result<(), ()> {           // return Ok(());
     println!("pick_file() start.");
     let dialog_result = FileDialogBuilder::new()
+        .add_filter("Gedcom", &["ged", "gedcom"])
         .add_filter("Markdown", &["md", "jpg"])
         .add_filter("All Files", &["*"])
         .pick_file();
@@ -75,7 +76,12 @@ async fn pick_file(state: State<'_, Settings>) -> Result<(), ()> {           // 
             println!("{path_name}");
             let mut file_name = state.file_name.lock().unwrap();
             *file_name = path;
-            // state.file_name = path_name; // .to_string_lossy();
+
+            // Release the mutex lock, otherwise the save will not work.
+            drop(file_name);
+
+            // Save the current settings.
+            state.save();
         }
     }
     println!("pick_file() finish.");
