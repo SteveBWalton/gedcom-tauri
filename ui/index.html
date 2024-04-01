@@ -7,36 +7,17 @@
   </head>
   <body>
     <h1>Welcome from Tauri!</h1>
+    <p id="file_name"></p>
     <p id="message"></p>
 
-    <script>
-        // access the pre-bundled global API functions
-        const { invoke } = window.__TAURI__.tauri;
-
-        // Now we can call our Command.
-        // `invoke` returns a Promise
-        invoke('greet', { name: 'from Rust' })
-            .then((response) => {
-            document.getElementById('message').innerText = response;
-            //window.header.innerHTML = response
-            }
-        );
-
-        // Code to execute on button click.
-        function buttonClick()
-        {
-            invoke('test_action', {});
-            return false;
-        }
-
-    </script>
+    <script type="text/javascript" src="index.js"></script>
 
     <p><a href="page2.html">Page 2</a></p>
 
     <p>
     <button onClick="javascript:location.reload()">Refresh</button>
 
-    <button onClick="javascript:buttonClick()">Execute Rust</button>
+    <button onClick="javascript:button2Click()">Pick File</button>
     </p>
 
   </body>
