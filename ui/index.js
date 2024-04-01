@@ -15,6 +15,21 @@ invoke('get_file_name', { })
     }
 );
 
+invoke('get_number_individuals', { })
+    .then((response) => {
+    document.getElementById('individuals_count').innerText = "There are " + response.toString() + " individuals in this gedcom.";
+    // document.getElementById('individuals_count').innerText = response.toString();
+    }
+);
+
+invoke('get_number_families', { })
+    .then((response) => {
+    document.getElementById('families_count').innerText = "There are " + response.toString() + " families in this gedcom.";
+    // document.getElementById('individuals_count').innerText = response.toString();
+    }
+);
+
+
 
 
 // Code to execute on button click.
