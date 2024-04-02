@@ -9,10 +9,11 @@
     <h1>Welcome from Tauri!</h1>
     <p id="file_name"></p>
     <p id="message"></p>
+    <p id="parameter"></p>
 
     <script type="text/javascript" src="index.js"></script>
 
-    <p><a href="page2.html">Page 2</a></p>
+    <p><a href="page2.html?para=1">Page 2</a> <a href="index.html?file=1">index</a></p>
 
     <p>
     <button onClick="javascript:location.reload()">Refresh</button>
@@ -22,11 +23,15 @@
 
     <fieldset style="display: inline-block; vertical-align:top;">
     <legend>Individuals</legend>
+    <table id="individuals_table">
+    </table>
     <p id="individuals_count">There are no individuals in this gedcom.</p>
     </fieldset>
 
     <fieldset style="display: inline-block; vertical-align:top;">
     <legend>Familes</legend>
+    <table id="families_table">
+    </table>
     <p id="families_count">There are no familes in this gedcom.</p>
     </fieldset>
 

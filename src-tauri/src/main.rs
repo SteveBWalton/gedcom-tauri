@@ -35,10 +35,7 @@ fn greet(name: &str, state: State<Settings> ) -> String {
     let mut count = state.count.lock().unwrap();
     *count += 1;
 
-    let test = state.file_name.lock().unwrap();
-    let file_name = test.to_string_lossy();
-
-    let result = format!("Hello, {name} {}\n{}.", *count, file_name);
+    let result = format!("Hello, {name} {}.", *count);
     return result;
 }
 

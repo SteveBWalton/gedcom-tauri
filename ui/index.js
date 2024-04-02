@@ -19,6 +19,7 @@ invoke('get_number_individuals', { })
     .then((response) => {
     document.getElementById('individuals_count').innerText = "There are " + response.toString() + " individuals in this gedcom.";
     // document.getElementById('individuals_count').innerText = response.toString();
+    document.getElementById('individuals_table').innerHTML = "<tr><td>I0001</td><td>Person One</td></tr>";
     }
 );
 
@@ -26,8 +27,23 @@ invoke('get_number_families', { })
     .then((response) => {
     document.getElementById('families_count').innerText = "There are " + response.toString() + " families in this gedcom.";
     // document.getElementById('individuals_count').innerText = response.toString();
+    document.getElementById('families_table').innerHTML = "<tr><td>F0001</td><td>Family One</td></tr><tr><td>F0002</td><td>Family Two</td></tr>";
     }
 );
+
+const queryString = window.location.search;
+console.log(queryString);
+const urlParams = new URLSearchParams(queryString);
+if (urlParams.has('file'))
+{
+    const file = urlParams.get('file');
+    document.getElementById('parameter').innerText = "The file parameter is '" + file + "'.";
+}
+else
+{
+    document.getElementById('parameter').innerText = "The file parameter is missing.";
+}
+
 
 
 
