@@ -3,7 +3,6 @@
 // System libraries.
 use std::path::PathBuf;
 use std::sync::Mutex;
-use std::fs;
 use std::fs::File;
 use std::io::Write;     // write_all
 use std::io::BufRead;

@@ -8,6 +8,9 @@ use tauri::State;
 // Application modules.
 mod settings;
 use settings::Settings;
+mod individuals;
+use individuals::get_number_individuals;
+use individuals::get_top_individuals;
 mod families;
 use families::get_number_families;
 
@@ -20,7 +23,7 @@ fn main() {
     tauri::Builder::default()
         // .manage(Settings::new())
         .manage(settings)
-        .invoke_handler(tauri::generate_handler![greet, get_file_name, pick_file, get_number_individuals, get_number_families])
+        .invoke_handler(tauri::generate_handler![greet, get_file_name, pick_file, get_number_individuals, get_top_individuals, get_number_families])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 
@@ -91,9 +94,4 @@ async fn pick_file(state: State<'_, Settings>) -> Result<(), ()> {           // 
 
 
 
-// Return the number of individuals in this gedcom.
-#[tauri::command]
-fn get_number_individuals(state: State<Settings> ) -> usize {
-    let gedcom = state.family_tree.lock().unwrap();
-    return gedcom.people.len()
-}
+
