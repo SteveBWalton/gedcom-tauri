@@ -44,6 +44,21 @@ pub fn get_individual_html(individual_idx: usize, state: State<Settings> ) -> St
     }
     html += "</pre></div>";
 
+    // Show the current tags.
+    html += "<div style=\"display: inline-block; vertical-align:top;\">";
+    html += "<pre style=\"border: 1px solid black;  background-color: white;\">";
+    for tag in &individual.tags.tags {
+        html = format!("{}{} '{}' '{}'<br/>", html, tag.level, tag.key, tag.value);
+        if tag.tags.tags.len() > 0
+        {
+            for child_tag in &tag.tags.tags
+            {
+                html = format!("{}    {} '{}' '{}'<br/>", html, child_tag.level, child_tag.key, child_tag.value);
+            }
+        }
+    }
+    html += "</pre></div>";
+
     return html;
 }
 
