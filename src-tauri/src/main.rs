@@ -14,6 +14,8 @@ use individuals::get_top_individuals;
 use individuals::get_individual_html;
 mod families;
 use families::get_number_families;
+use families::get_top_families;
+use families::get_family_html;
 
 
 
@@ -24,7 +26,7 @@ fn main() {
     tauri::Builder::default()
         // .manage(Settings::new())
         .manage(settings)
-        .invoke_handler(tauri::generate_handler![greet, get_file_name, pick_file, get_number_individuals, get_top_individuals, get_individual_html, get_number_families])
+        .invoke_handler(tauri::generate_handler![greet, get_file_name, pick_file, get_number_individuals, get_top_individuals, get_individual_html, get_number_families, get_top_families, get_family_html])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 

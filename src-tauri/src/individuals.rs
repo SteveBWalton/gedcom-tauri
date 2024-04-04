@@ -19,26 +19,26 @@ pub fn get_number_individuals(state: State<Settings> ) -> usize {
 // Return the top individuals in this gedcom.
 #[tauri::command]
 pub fn get_top_individuals(state: State<Settings> ) -> String {
-    return "<tr><td><a href=\"individual.html?idx=0\">I0001</a></td><td>Person One</td></tr><tr><td><a href=\"individual.html?idx=1\">I0002</a></td><td>Person Two</td></tr>".to_string();
+    let mut html = "".to_string();
+    for i in 0..10 {
+        html = format!("{}<tr><td><a href=\"individual.html?idx={}\">I{:04}</a></td><td>Individual {}</td></tr>", html, i, i+1, i+1);
+    }
+    return html;
+
 }
 
 
 // Return a description of the specified individual in html.
 #[tauri::command]
-// pub fn get_individual_html(state: State<Settings> ) -> String {
-//    let individual_idx = 0;
 pub fn get_individual_html(individual_idx: usize, state: State<Settings> ) -> String {
-    // let mut html: String = "".to_string();
-    // html = format!("<h1>ID{}</h1>", individual_idx);
     let mut html: String = format!("<h1>ID{}</h1>", individual_idx);
 
+    // Show the original gedcom.
     html += "<div style=\"display: inline-block; vertical-align:top;\">";
     html += "<pre style=\"border: 1px solid black;  background-color: white;\">";
-
     let gedcom = state.family_tree.lock().unwrap();
     let individual = &gedcom.individuals[individual_idx];
     for line in &individual.gedcom {
-        // html += format!("{}<br/>", line);
         html += &line;
         html += "<br/>";
     }

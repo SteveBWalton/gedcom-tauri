@@ -5,35 +5,41 @@ const { invoke } = window.__TAURI__.tauri;
 // `invoke` returns a Promise
 invoke('greet', { name: 'from Rust' })
     .then((response) => {
-    document.getElementById('message').innerText = response;
+        document.getElementById('message').innerText = response;
     }
 );
 
 invoke('get_file_name', { })
     .then((response) => {
-    document.getElementById('file_name').innerText = response;
+        document.getElementById('file_name').innerText = response;
     }
 );
 
 invoke('get_number_individuals', { })
     .then((response) => {
-    document.getElementById('individuals_count').innerText = "There are " + response.toString() + " individuals in this gedcom.";
+        document.getElementById('individuals_count').innerText = "There are " + response.toString() + " individuals in this gedcom.";
     }
 );
 
 invoke('get_top_individuals', { })
     .then((response) => {
-    document.getElementById('individuals_table').innerHTML = response;
+        document.getElementById('individuals_table').innerHTML = response;
     }
 );
 
 invoke('get_number_families', { })
     .then((response) => {
-    document.getElementById('families_count').innerText = "There are " + response.toString() + " families in this gedcom.";
-    // document.getElementById('individuals_count').innerText = response.toString();
-    document.getElementById('families_table').innerHTML = "<tr><td>F0001</td><td>Family One</td></tr><tr><td>F0002</td><td>Family Two</td></tr>";
+        document.getElementById('families_count').innerText = "There are " + response.toString() + " families in this gedcom.";
     }
 );
+
+invoke('get_top_families', { })
+    .then((response) => {
+        document.getElementById('families_table').innerHTML = response;
+    }
+);
+
+
 
 const queryString = window.location.search;
 console.log(queryString);
