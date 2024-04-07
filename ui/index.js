@@ -39,6 +39,13 @@ invoke('get_top_families', { })
     }
 );
 
+// Populate the sources fieldset.
+invoke('get_top_sources', {})
+    .then((response) => {
+        document.getElementById('sources').innerHTML = response;
+    }
+);
+
 
 
 const queryString = window.location.search;
