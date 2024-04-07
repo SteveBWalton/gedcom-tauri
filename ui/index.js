@@ -46,6 +46,13 @@ invoke('get_top_sources', {})
     }
 );
 
+// Populate the tags fieldset.
+invoke('get_header_tags', {})
+    .then((response) => {
+        document.getElementById('header_tags').innerHTML = response;
+    }
+);
+
 
 
 const queryString = window.location.search;

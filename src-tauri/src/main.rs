@@ -28,7 +28,7 @@ fn main() {
     tauri::Builder::default()
         // .manage(Settings::new())
         .manage(settings)
-        .invoke_handler(tauri::generate_handler![greet, get_file_name, pick_file, get_number_individuals, get_top_individuals, get_individual_html, get_number_families, get_top_families, get_family_html, get_top_sources])
+        .invoke_handler(tauri::generate_handler![greet, get_file_name, pick_file, get_header_tags, get_number_individuals, get_top_individuals, get_individual_html, get_number_families, get_top_families, get_family_html, get_top_sources])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 
@@ -58,6 +58,26 @@ fn get_file_name(state: State<Settings> ) -> String {
     let result = format!("{}", file_name);
     return result;
 }
+
+
+
+// Returns the tags in the header.
+#[tauri::command]
+fn get_header_tags(state: State<Settings> ) -> String {
+    // Get the header tags.
+    let gedcom = state.family_tree.lock().unwrap();
+    let tags = &gedcom.tags;
+
+    let mut html: String = "<pre style=\"border: 1px solid black;  background-color: white;\">".to_string();
+    for line in &tags.to_decorated_html()
+    {
+        html = format!("{}{}<br/>", html, line);
+    }
+    html += "</pre>";
+
+    return html;
+}
+
 
 
 // The async allows the function to run not on the main thread and allow blocking dialogs.
