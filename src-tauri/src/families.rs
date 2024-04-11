@@ -22,7 +22,7 @@ pub fn get_number_families(state: State<Settings> ) -> usize {
 pub fn get_top_families(_state: State<Settings> ) -> String {
     let mut families = "".to_string();
     for i in 0..10 {
-        families = format!("{}<tr><td><a href=\"family?idx={}\">F{:04}</a></td><td>Family {}</td></tr>", families, i, i+1, i+1);
+        families = format!("{}<tr><td><a href=\"family?idx=F{:04}\">F{:04}</a></td><td>Family {}</td></tr>", families, i+1, i+1, i+1);
     }
     return families;
 }
@@ -31,14 +31,13 @@ pub fn get_top_families(_state: State<Settings> ) -> String {
 
 // Return a description of the specified family in html.
 #[tauri::command]
-pub fn get_family_html(family_idx: usize, state: State<Settings> ) -> String {
-    let mut html: String = format!("<h1>ID{}</h1>", family_idx);
+pub fn get_family_html(family_idx: &str, state: State<Settings> ) -> String {
+    let mut html: String = format!("<h1>{}</h1>", family_idx);
 
     // Get the family object.
     let gedcom = state.family_tree.lock().unwrap();
-    let family = &gedcom.families[family_idx];
-
-    html = format!("{}<p>idx = '{}'</p>", html, family.idx);
+    // let family = &gedcom.families[family_idx];
+    let family = &gedcom.get_family(family_idx);
 
     // Show the original gedcom.
     html += "<div style=\"display: inline-block; vertical-align:top;\">";
