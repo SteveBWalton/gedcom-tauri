@@ -19,6 +19,9 @@ use families::get_family_html;
 mod sources;
 use sources::get_top_sources;
 use sources::get_source_html;
+mod objects;
+use objects::get_top_objects;
+use objects::get_object_html;
 
 
 
@@ -29,7 +32,7 @@ fn main() {
     tauri::Builder::default()
         // .manage(Settings::new())
         .manage(settings)
-        .invoke_handler(tauri::generate_handler![get_file_name, pick_file, get_header_tags, get_number_individuals, get_top_individuals, get_individual_html, get_number_families, get_top_families, get_family_html, get_top_sources, get_source_html])
+        .invoke_handler(tauri::generate_handler![get_file_name, pick_file, get_header_tags, get_number_individuals, get_top_individuals, get_individual_html, get_number_families, get_top_families, get_family_html, get_top_sources, get_source_html, get_top_objects, get_object_html])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 

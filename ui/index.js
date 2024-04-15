@@ -40,6 +40,13 @@ invoke('get_top_sources', {})
     }
 );
 
+// Populate the sources fieldset.
+invoke('get_top_objects', {})
+    .then((response) => {
+        document.getElementById('objects').innerHTML = response;
+    }
+);
+
 // Populate the tags fieldset.
 invoke('get_header_tags', {})
     .then((response) => {

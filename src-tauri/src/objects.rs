@@ -8,37 +8,37 @@ use settings::Settings;
 
 
 
-// Return the top sources in this gedcom in html for the index page.
+// Return the top media objects in this gedcom in html for the index page.
 #[tauri::command]
-pub fn get_top_sources(state: State<Settings> ) -> String {
+pub fn get_top_objects(state: State<Settings> ) -> String {
     let mut html: String = "<table>".to_string();
     // Get the sources collection.
     let gedcom = state.family_tree.lock().unwrap();
-    let sources = &gedcom.sources;
+    let objects = &gedcom.objects;
 
     for i in 0..10 {
-        html = format!("{}<tr><td><a href=\"source?idx=S{:04}\">S{:04}</a></td><td>Source {}</td></tr>", html, i+1, i+1, i+1);
+        html = format!("{}<tr><td><a href=\"object?idx=O{:04}\">O{:04}</a></td><td>Object {}</td></tr>", html, i+1, i+1, i+1);
     }
     html = format!("{}</table>", html);
-    html = format!("{}<p>There are {} sources in this gedcom.</p>", html, sources.len());
+    html = format!("{}<p>There are {} objects in this gedcom.</p>", html, objects.len());
     return html;
 }
 
 
 
-// Return a description of the specified source in html.
+// Return a description of the specified media object in html.
 #[tauri::command]
-pub fn get_source_html(source_idx: &str, state: State<Settings> ) -> String {
-    let mut html: String = format!("<h1>{}</h1>", source_idx);
+pub fn get_object_html(object_idx: &str, state: State<Settings> ) -> String {
+    let mut html: String = format!("<h1>{}</h1>", object_idx);
 
-    // Get the source.
+    // Get the media object.
     let gedcom = state.family_tree.lock().unwrap();
-    let source = &gedcom.get_source(source_idx);
+    let object = &gedcom.get_object(object_idx);
 
     // Show the current tags in decorated style.
     html += "<div style=\"display: inline-block; vertical-align:top;\">";
     html += "<pre style=\"border: 1px solid black;  background-color: white;\">";
-    for line in &source.tags.to_decorated_html()
+    for line in &object.tags.to_decorated_html()
     {
         html = format!("{}{}<br/>", html, line);
     }
