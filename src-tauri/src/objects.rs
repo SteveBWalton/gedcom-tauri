@@ -17,7 +17,7 @@ pub fn get_top_objects(state: State<Settings> ) -> String {
     let objects = &gedcom.objects;
 
     for i in 0..10 {
-        html = format!("{}<tr><td><a href=\"object?idx=O{:04}\">O{:04}</a></td><td>Object {}</td></tr>", html, i+1, i+1, i+1);
+        html = format!("{}<tr><td><a href=\"object?idx=M{:04}\">M{:04}</a></td><td>Object {}</td></tr>", html, i+1, i+1, i+1);
     }
     html = format!("{}</table>", html);
     html = format!("{}<p>There are {} objects in this gedcom.</p>", html, objects.len());
