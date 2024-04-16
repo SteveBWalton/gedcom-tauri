@@ -81,6 +81,3 @@ function button2Click()
     location.reload();
     return false;
 }
-
-
-

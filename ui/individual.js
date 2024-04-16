@@ -19,6 +19,3 @@ else
 {
     document.getElementById('parameter').innerText = "The index is missing.";
 }
-
-
-
