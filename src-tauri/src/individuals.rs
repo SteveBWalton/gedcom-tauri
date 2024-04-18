@@ -27,6 +27,25 @@ pub fn get_top_individuals(_state: State<Settings> ) -> String {
 
 }
 
+// Returns a title for the specified individual.
+#[tauri::command]
+pub fn get_individual_title(individual_idx: &str, state: State<Settings> ) -> String {
+// Get the individual.
+    let gedcom = state.family_tree.lock().unwrap();
+    // let individual = &gedcom.individuals[individual_idx];
+    let individual = &gedcom.get_individual(individual_idx);
+
+    match individual.tags.find_one("NAME") {
+        Some(tag) => {
+            String::from(&tag.value)
+        }
+        None => {
+            "NAME tag not found.".to_string()
+        }
+    }
+}
+
+
 
 // Return a description of the specified individual in html.
 #[tauri::command]

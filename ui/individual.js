@@ -8,6 +8,12 @@ const urlParams = new URLSearchParams(queryString);
 if (urlParams.has('idx'))
 {
     const idx = urlParams.get('idx');
+    invoke('get_individual_title', { individualIdx: idx })
+    // invoke('get_individual_html', { })
+        .then((response) => {
+            document.getElementById('title').innerText = response;
+        }
+    );
     invoke('get_individual_html', { individualIdx: idx })
     // invoke('get_individual_html', { })
         .then((response) => {
