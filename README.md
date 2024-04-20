@@ -1,4 +1,4 @@
-# gedcom-tauri
+# Rust Gedcom Viewer
 A gedcom viewer using the Tauri front-end.
 Currently only a really basic viewer.
 Plan to add editing in future.
