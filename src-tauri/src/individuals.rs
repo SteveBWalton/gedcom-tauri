@@ -18,10 +18,12 @@ pub fn get_number_individuals(state: State<Settings> ) -> usize {
 
 // Return the top individuals in this gedcom.
 #[tauri::command]
-pub fn get_top_individuals(_state: State<Settings> ) -> String {
+pub fn get_top_individuals(state: State<Settings> ) -> String {
+    let gedcom = state.family_tree.lock().unwrap();
     let mut html = "".to_string();
     for i in 0..10 {
-        html = format!("{}<tr><td><a href=\"individual.html?idx=I{:04}\">I{:04}</a></td><td>Individual {}</td></tr>", html, i+1, i+1, i+1);
+        let individual = &gedcom.individuals[i];
+        html = format!("{}<tr><td><a href=\"individual.html?idx={}\">{}</a></td><td>Individual {}</td></tr>", html, individual.idx, individual.idx, i+1);
     }
     return html;
 
