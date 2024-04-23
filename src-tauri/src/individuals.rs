@@ -23,7 +23,7 @@ pub fn get_top_individuals(state: State<Settings> ) -> String {
     let mut html = "".to_string();
     for i in 0..10 {
         let individual = &gedcom.individuals[i];
-        html = format!("{}<tr><td><a href=\"individual.html?idx={}\">{}</a></td><td>Individual {}</td></tr>", html, individual.idx, individual.idx, i+1);
+        html = format!("{}<tr><td><a href=\"individual.html?idx={}\">{}</a></td><td><a href=\"individual.html?idx={}\">{}</a></td></tr>", html, individual.idx, individual.idx, individual.idx, individual.get_name().unwrap());
     }
     return html;
 
